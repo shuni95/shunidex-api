@@ -47,7 +47,7 @@ func main() {
 	// Routes consist of a path and a handler function.
 	r.HandleFunc("/api/types", pth.GetAll)
 	r.HandleFunc("/api/types/{type}", pth.GetType)
-	r.HandleFunc("/api/types/evaluateTeam", pth.EvaluateTeam)
+	r.HandleFunc("/api/team/evaluate", pth.EvaluateTeam)
 
 	// Bind to a port and pass our router in
 	log.Fatal(http.ListenAndServe(":8000", r))

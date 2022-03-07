@@ -16,6 +16,28 @@ type PokemonTypeNode struct {
 	Relations   []AgainstRelation `json:"relations"`
 }
 
+func (ptn *PokemonTypeNode) GetRelation(rivalType string) (float64, bool) {
+	for _, relation := range ptn.Relations {
+		if relation.Rival == rivalType {
+			return relation.Effectiveness, true
+		}
+	}
+
+	return -1.0, false
+}
+
+func (ptn PokemonTypeNode) IsStrongerAgainst() []PokemonTypeNode {
+	var results []PokemonTypeNode
+
+	for _, relation := range ptn.Relations {
+		if relation.Effectiveness == 2.0 {
+			results = append(results, typeRepo.cache[relation.Rival])
+		}
+	}
+
+	return results
+}
+
 type AgainstRelation struct {
 	Rival         string  `json:"rival"`
 	Effectiveness float64 `json:"effectiveness"`
